@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Baptiste71/Baptiste_Planchon_6_19032022_Back/issues"
   },
-  "homepage": "https://github.com/Baptiste71/Baptiste_Planchon_6_19032022_Back#readme"
+  "homepage": "https://github.com/Baptiste71/Baptiste_Planchon_6_19032022_Back#readme",
+  "dependencies": {
+    "express": "^4.17.3"
+  }
 }
