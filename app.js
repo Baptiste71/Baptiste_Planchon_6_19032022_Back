@@ -4,6 +4,10 @@ const app = express();
 
 const thing = require("./models/Thing");
 
+// Importation des routers
+
+const userRoutes = require("./routes/user");
+
 mongoose
   .connect("mongodb+srv://BaptistePlch:Titi2000@cluster0.dk9rx.mongodb.net/myFirstDatabase?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("Connexion à MongoDB réussie !"))
@@ -38,6 +42,10 @@ app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, PATCH, OPTIONS");
   next();
 });
+
+// Enregistrement des routes
+
+app.use("/api/auth", userRoutes);
 
 // exportation du fichier
 
