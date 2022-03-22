@@ -4,24 +4,25 @@ const bcrypt = require("bcrypt");
 const req = require("express/lib/request");
 const res = require("express/lib/response");
 
-const User = require("../models/User");
+const User = require("../models/users");
 
 // Enregistrment de nouveaux utilisateurs
 
-exports.signup = (req, res, next) => {};
-bcrypt
-  .hash(req.body.password, 10)
-  .then((hash) => {
-    const user = new User({
-      email: req.body.email,
-      password: hash,
-    });
-    user
-      .save()
-      .then(() => res.status(201).json({ message: "Utilisateur créé !" }))
-      .catch((error) => res.status(400).json({ error }));
-  })
-  .catch((error) => res.status(500).json({ error }));
+exports.signup = (req, res, next) => {
+  bcrypt
+    .hash(req.body.password, 10)
+    .then((hash) => {
+      const user = new User({
+        email: req.body.email,
+        password: hash,
+      });
+      user
+        .save()
+        .then(() => res.status(201).json({ message: "Utilisateur créé !" }))
+        .catch((error) => res.status(400).json({ error }));
+    })
+    .catch((error) => res.status(500).json({ error }));
+};
 
 // Connection des utilisateurs existants
 
