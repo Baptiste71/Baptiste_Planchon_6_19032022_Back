@@ -1,6 +1,7 @@
 // Importation de bcrypt pour le hachage du mot de passe
 
 const bcrypt = require("bcrypt");
+const jsonWT = require("jsonwebtoken");
 const req = require("express/lib/request");
 const res = require("express/lib/response");
 
@@ -43,7 +44,7 @@ exports.login = (req, res, next) => {
           }
           res.status(200).json({
             userId: user.userId,
-            token: "TOKEN",
+            token: jsonWT.sign({ userId: user.userId }, "RANDOM_TOKEN_SECRET", { expiresIn: "24h" }),
           });
         })
         .catch((error) => res.status(500).json({ error }));
