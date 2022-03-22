@@ -1,6 +1,9 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
+
+const thing = require("./models/Thing");
+
 mongoose
   .connect("mongodb+srv://BaptistePlch:Titi2000@cluster0.dk9rx.mongodb.net/myFirstDatabase?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("Connexion à MongoDB réussie !"))
