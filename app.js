@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
+app.use(express.json());
 
 const thing = require("./models/Thing");
 
@@ -15,23 +16,23 @@ mongoose
 
 app.use(express.json());
 
-app.use("/api/stuff", (req, res, next) => {
+app.post("/api/stuff", (req, res, next) => {
+  console.log(req.body);
+  res.status(201).json({ message: "objet crée !" });
+});
+
+app.get("/api/stuff", (req, res, next) => {
   const stuff = [
     {
-      _id: "oeihfzeoi",
-      title: "Mon premier objet",
+      userId: "oeihfzeoi",
+      name: "Mon premier objet",
       description: "Les infos de mon premier objet",
       imageUrl: "https://cdn.pixabay.com/photo/2019/06/11/18/56/camera-4267692_1280.jpg",
-      price: 4900,
-      userId: "qsomihvqios",
-    },
-    {
-      _id: "oeihfzeomoihi",
-      title: "Mon deuxième objet",
-      description: "Les infos de mon deuxième objet",
-      imageUrl: "https://cdn.pixabay.com/photo/2019/06/11/18/56/camera-4267692_1280.jpg",
-      price: 2900,
-      userId: "qsomihvqios",
+      heat: 3,
+      likes: 6,
+      dislikes: 4,
+      manufacturer: "qsomihvqios",
+      mainPepper: "piment rouge",
     },
   ];
   res.status(200).json(stuff);
