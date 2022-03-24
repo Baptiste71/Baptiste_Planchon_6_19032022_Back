@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const app = express();
 app.use(express.json());
 
-const thing = require("./models/Thing");
+const thing = require("./models/Sauces");
 
 // Importation des routers
 
