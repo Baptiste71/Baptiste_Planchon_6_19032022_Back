@@ -14,8 +14,10 @@ const thingSchema = mongoose.Schema({
   heat: { type: Number, required: true },
   likes: { type: Number, required: true },
   dislikes: { type: Number, required: true },
+  usersLiked: { type: [String], required: true },
+  usersDisliked: { type: [String], required: true },
 });
 
 // exportation du modele
 
-module.exports = mongoose.model("Thing", thingSchema);
+module.exports = mongoose.model("Sauces", thingSchema);

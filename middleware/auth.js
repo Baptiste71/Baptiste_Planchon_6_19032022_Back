@@ -1,4 +1,4 @@
-const jsonWT = require("jsonwentoken");
+const jsonWT = require("jsonwebtoken");
 
 // Exportation du middleware
 
