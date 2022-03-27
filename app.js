@@ -10,6 +10,7 @@ const sauces = require("./models/Sauces");
 
 const userRoutes = require("./routes/user");
 const saucesRoutes = require("./routes/sauces");
+const Sauces = require("./models/Sauces");
 
 mongoose
   .connect("mongodb+srv://BaptistePlch:Titi2000@cluster0.dk9rx.mongodb.net/myFirstDatabase?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true })
@@ -37,7 +38,7 @@ app.post("/api/sauces", (req, res, next) => {
 });
 
 app.use("/api/sauces", (req, res, next) => {
-  Thing.find()
+  Sauces.find()
     .then((things) => res.status(200).json(things))
     .catch((error) => res.status(400).json({ error }));
 });
