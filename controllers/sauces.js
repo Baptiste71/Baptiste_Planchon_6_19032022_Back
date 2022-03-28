@@ -11,7 +11,7 @@ const fs = require("fs");
 exports.getAllElement = (req, res, next) => {
   allSauces
     .find()
-    .then(() => res.status(201).json({ message: "Toutes les sauces ont été trouvées !" }))
+    .then((sauces) => res.status(200).json(sauces, { message: "Toutes les sauces ont été trouvées !" }))
     .catch((error) => res.status(400).json({ error }));
 };
 
@@ -19,9 +19,9 @@ exports.getAllElement = (req, res, next) => {
 
 exports.getJustOneElement = (req, res, next) => {
   allSauces
-    .findOne({ _id: req.body._id })
-    .then(() => res.status(201).json({ message: "La sauce a été trouvée !" }))
-    .catch((error) => res.status(400).json({ error }));
+    .findOne({ _id: req.params._id })
+    .then((sauces) => res.status(200).json(sauces, { message: "La sauce a été trouvée !" }))
+    .catch((error) => res.status(404).json({ error }));
 };
 
 // controller pour la route Post
@@ -39,7 +39,7 @@ exports.addElement = (req, res, next) => {
   });
   addSauce
     .save()
-    .then(() => res.status(201).json({ message: "Sauces enregistrée !" }))
+    .then(() => res.status(201).json({ message: "Sauce enregistrée !" }))
     .catch((error) => res.status(400).json({ error }));
 };
 
@@ -55,7 +55,7 @@ exports.updateElement = (req, res, next) => {
 
   allSauces
     .updateOne({ _id: req.params.id }, { ...saucesObject, _id: req.params.id })
-    .then(() => res.status(200).json({ message: "Sauces modifiée !" }))
+    .then(() => res.status(200).json({ message: "Sauce modifiée !" }))
     .catch((error) => res.status(400).json({ error }));
 };
 
@@ -88,7 +88,7 @@ exports.likeElement = (req, res, next) => {
 
     allSauces
       .updateOne({ _id: sauces }, { usersLiked: user, likes: +1 })
-      .then(() => res.status(200).json({ message: "J'aime cette sauce !" }))
+      .then(() => res.status(200).json({ message: "J'aime bien cette sauce !" }))
       .catch((error) => res.status(400).json({ error }));
   } else if (likes) {
     // Dans le cas d'un dislike
@@ -98,11 +98,11 @@ exports.likeElement = (req, res, next) => {
       .then(() => res.status(200).json({ message: "J'aime pas cette sauce !" }))
       .catch((error) => res.status(400).json({ error }));
   } else {
-    // Dans le cas ou like n'est pas attribué
+    // Dans le cas où like n'est pas attribué
 
     allSauces
       .updateOne({ _id: sauces }, { usersLiked: user })
-      .then(() => res.status(200).json({ message: "J'aime pas cette sauce !" }))
+      .then(() => res.status(200).json({ message: "Je n'ai pas fais mon choix !" }))
       .catch((error) => res.status(400).json({ error }));
   }
 };

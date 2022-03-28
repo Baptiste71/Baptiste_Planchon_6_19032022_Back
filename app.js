@@ -4,13 +4,10 @@ const path = require("path");
 const app = express();
 app.use(express.json());
 
-const sauces = require("./models/Sauces");
-
 // Importation des routers
 
 const userRoutes = require("./routes/user");
 const saucesRoutes = require("./routes/sauces");
-const Sauces = require("./models/Sauces");
 
 mongoose
   .connect("mongodb+srv://BaptistePlch:Titi2000@cluster0.dk9rx.mongodb.net/myFirstDatabase?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true })
@@ -26,22 +23,34 @@ app.use((req, res, next) => {
   next();
 });
 
-app.post("/api/sauces", (req, res, next) => {
-  delete req.body._id;
-  const thing = new Thing({
-    ...req.body,
-  });
-  thing
-    .save()
-    .then(() => res.status(201).json({ message: "Sauces enregistrée !" }))
-    .catch((error) => res.status(400).json({ error }));
-});
+// Creation d'une nouvelle sauce
 
-app.use("/api/sauces", (req, res, next) => {
-  Sauces.find()
-    .then((things) => res.status(200).json(things))
-    .catch((error) => res.status(400).json({ error }));
-});
+//app.post("/api/sauces", (req, res, next) => {
+//  delete req.body._id;
+//  const thing = new Sauces({
+//    ...req.body,
+//  });
+//  thing
+//    .save()
+//    .then(() => res.status(201).json({ message: "Sauce enregistrée !" }))
+//    .catch((error) => res.status(400).json({ error }));
+//});
+//
+//// Recuperation d'une sauce specifique
+//
+//app.get("/api/sauces/:id", (req, res, next) => {
+//  Sauces.findOne({ _id: req.params.id })
+//    .then((thing) => res.status(200).json(thing))
+//    .catch((error) => res.status(404).json({ error }));
+//});
+//
+//// Recuperation de toute les sauces
+//
+//app.get("/api/sauces", (req, res, next) => {
+//  Sauces.find()
+//    .then((things) => res.status(200).json(things))
+//    .catch((error) => res.status(400).json({ error }));
+//});
 
 app.use("/images", express.static(path.join(__dirname, "images")));
 
