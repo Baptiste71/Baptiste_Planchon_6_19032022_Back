@@ -22,7 +22,7 @@ const storage = multer.diskStorage({
     // Suppression des espaces dans le nom orginal remplacer par des '_'
     const name = file.originalname.split(" ").join("_");
     // Création de l'extension du fichier
-    const extension = dictionnary_MIME_TYPES[FileSystem.mimetype];
+    const extension = dictionnary_MIME_TYPES[file.mimetype];
     callback(null, name + Date.now() + "." + extension);
   },
 });

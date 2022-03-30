@@ -27,7 +27,7 @@ exports.getJustOneElement = (req, res, next) => {
 // controller pour la route Post
 
 exports.addElement = (req, res, next) => {
-  const saucesObject = JSON.parse(req.body.Sauces);
+  const saucesObject = JSON.parse(req.body.sauce);
   delete saucesObject._id;
   const addSauce = new allSauces({
     ...saucesObject,

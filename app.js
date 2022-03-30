@@ -2,6 +2,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const path = require("path");
 const app = express();
+require("dotenv").config();
+
 app.use(express.json());
 
 // Importation des routers
@@ -10,7 +12,7 @@ const userRoutes = require("./routes/user");
 const saucesRoutes = require("./routes/sauces");
 
 mongoose
-  .connect("mongodb+srv://BaptistePlch:Titi2000@cluster0.dk9rx.mongodb.net/myFirstDatabase?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(process.env.BDD_LINK, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("Connexion à MongoDB réussie !"))
   .catch(() => console.log("Connexion à MongoDB échouée !"));
 

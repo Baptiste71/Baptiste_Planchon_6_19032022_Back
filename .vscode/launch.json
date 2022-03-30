@@ -1,10 +1,17 @@
 {
-  "configurations": [
-    {
-      "type": "pwa-msedge",
-      "name": "http://app.get('/api/stuff/:id', (req, res, next) => {  Thing.findOne({ _id: req.params.id })    .then(thing => res.status(200).json(thing))    .catch(error => res.status(404).json({ error }));});",
-      "request": "launch",
-      "url": "http://app.get('/api/stuff/:id', (req, res, next) => {  Thing.findOne({ _id: req.params.id })    .then(thing => res.status(200).json(thing))    .catch(error => res.status(404).json({ error }));});"
-    }
-  ]
+    // Utilisez IntelliSense pour en savoir plus sur les attributs possibles.
+    // Pointez pour afficher la description des attributs existants.
+    // Pour plus d'informations, visitez : https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "pwa-node",
+            "request": "launch",
+            "name": "Launch Program",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}\\server.js"
+        }
+    ]
 }
