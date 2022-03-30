@@ -11,8 +11,8 @@ const fs = require("fs");
 exports.getAllElement = (req, res, next) => {
   allSauces
     .find()
-    .then((sauces) => res.status(200).json(sauces, { message: "Toutes les sauces ont été trouvées !" }))
-    .catch((error) => res.status(400).json({ error }));
+    .then((sauces) => res.status(200).json(sauces))
+    .catch((error) => res.status(404).json({ error }));
 };
 
 // controller pour la route get /:id
@@ -20,7 +20,7 @@ exports.getAllElement = (req, res, next) => {
 exports.getJustOneElement = (req, res, next) => {
   allSauces
     .findOne({ _id: req.params._id })
-    .then((sauces) => res.status(200).json(sauces, { message: "La sauce a été trouvée !" }))
+    .then((sauces) => res.status(200).json(sauces))
     .catch((error) => res.status(404).json({ error }));
 };
 
