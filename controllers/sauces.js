@@ -48,7 +48,7 @@ exports.addElement = (req, res, next) => {
 exports.updateElement = (req, res, next) => {
   const saucesObject = req.file
     ? {
-        ...JSON.parse(req.body.Sauces),
+        ...JSON.parse(req.body.sauce),
         imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
       }
     : { ...req.body };
