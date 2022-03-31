@@ -19,7 +19,7 @@ exports.getAllElement = (req, res, next) => {
 
 exports.getJustOneElement = (req, res, next) => {
   allSauces
-    .findOne({ _id: req.params._id })
+    .findOne({ _id: req.params.id })
     .then((sauces) => res.status(200).json(sauces))
     .catch((error) => res.status(404).json({ error }));
 };
