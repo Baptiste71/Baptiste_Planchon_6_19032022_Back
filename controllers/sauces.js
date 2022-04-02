@@ -83,26 +83,67 @@ exports.likeElement = (req, res, next) => {
   const user = req.body.userId;
   const likes = req.body.like;
 
-  if (likes) {
-    // Dans le cas d'un like
+  switch (likes) {
+    case 1:
+      // Dans le cas d'un like +1
+      allSauces
+        .updateOne(
+          { _id: sauces },
+          {
+            $inc: { likes: 1 },
+            $push: { usersLiked: user },
+          }
+        )
+        .then(() => res.status(200).json({ message: "J'aime bien cette sauce !" }))
+        .catch((error) => res.status(400).json({ error }));
+      break;
 
-    allSauces
-      .updateOne({ _id: sauces }, { usersLiked: user, likes: +1 })
-      .then(() => res.status(200).json({ message: "J'aime bien cette sauce !" }))
-      .catch((error) => res.status(400).json({ error }));
-  } else if (likes) {
-    // Dans le cas d'un dislike
+    case -1:
+      // Dans le cas d'un Dislike +1
+      allSauces
+        .updateOne(
+          { _id: sauces },
+          {
+            $inc: { dislikes: 1 },
+            $push: { usersDisliked: user },
+          }
+        )
+        .then(() => res.status(200).json({ message: "J'aime pas cette sauce !" }))
+        .catch((error) => res.status(400).json({ error }));
 
-    allSauces
-      .updateOne({ _id: sauces }, { usersLiked: user, dislikes: -1 })
-      .then(() => res.status(200).json({ message: "J'aime pas cette sauce !" }))
-      .catch((error) => res.status(400).json({ error }));
-  } else {
-    // Dans le cas où like n'est pas attribué
+      break;
 
-    allSauces
-      .updateOne({ _id: sauces }, { usersLiked: user })
-      .then(() => res.status(200).json({ message: "Je n'ai pas fais mon choix !" }))
-      .catch((error) => res.status(400).json({ error }));
+    case 0:
+      // Dans le cas d'un like neutre = 0 (pas de vote) ou d'une remise à zero si on enleve le dislike
+      allSauces
+        .findOne({ _id: sauces })
+        .then((sauce) => {
+          if (sauce.usersLiked.includes(user)) {
+            allSauces
+              .updateOne(
+                { _id: sauces },
+                {
+                  $inc: { likes: -1 },
+                  $pull: { usersLiked: user },
+                }
+              )
+              .then(() => res.status(200).json({ message: "Je suis neutre !" }))
+              .catch((error) => res.status(400).json({ error }));
+          }
+          if (sauce.usersDisliked.includes(user)) {
+            allSauces
+              .updateOne(
+                { _id: sauces },
+                {
+                  $inc: { dislikes: -1 },
+                  $pull: { usersDisliked: user },
+                }
+              )
+              .then(() => res.status(200).json({ message: "Je suis neutre !" }))
+              .catch((error) => res.status(400).json({ error }));
+          }
+        })
+        .catch((error) => res.status(404).json({ error }));
+      break;
   }
 };
