@@ -46,6 +46,13 @@ exports.addElement = (req, res, next) => {
 // controller pour la route put
 
 exports.updateElement = (req, res, next) => {
+  allSauces.findOne({ _id: req.params.id }).then((sauce) => {
+    if (sauce.userId !== req.body.userId) {
+      return res.statut(401).json({ message: "requête non autorisée !" });
+    }
+    const filename = sauce.imageUrl.split("/images/")[1];
+    fs.unlink(`images/${filename}`, () => {});
+  });
   const saucesObject = req.file
     ? {
         ...JSON.parse(req.body.sauce),
@@ -65,6 +72,9 @@ exports.deleteElement = (req, res, next) => {
   allSauces
     .findOne({ _id: req.params.id })
     .then((sauces) => {
+      if (sauces.userId !== req.body.userId) {
+        return res.statut(401).json({ message: "requête non autorisée !" });
+      }
       const filename = sauces.imageUrl.split("/images/")[1];
       fs.unlink(`images/${filename}`, () => {
         allSauces
